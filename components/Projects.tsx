@@ -16,7 +16,7 @@ export default function Projects() {
           className="mb-12"
         >
           <p className="text-sm font-mono text-[#2E75B6] mb-3">02. projetos</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#f0f0f0]">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#111] dark:text-[#f0f0f0]">
             O que eu já construí
           </h2>
         </motion.div>

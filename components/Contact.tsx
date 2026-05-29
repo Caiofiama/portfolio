@@ -15,10 +15,10 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-sm font-mono text-[#2E75B6] mb-3">04. contato</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#f0f0f0] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#111] dark:text-[#f0f0f0] mb-4">
             Vamos trabalhar juntos
           </h2>
-          <p className="text-[#888] mb-10">
+          <p className="text-[#555] dark:text-[#888] mb-10">
             Aberto a oportunidades remotas de front-end.
           </p>
         </motion.div>
@@ -42,7 +42,7 @@ export default function Contact() {
             href="https://github.com/Caiofiama"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 border border-[#333] hover:border-[#555] text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 px-6 py-3 border border-[#d0d0d0] dark:border-[#333] hover:border-[#999] dark:hover:border-[#555] text-[#111] dark:text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto justify-center"
           >
             <GithubIcon size={16} />
             github.com/Caiofiama
@@ -50,7 +50,7 @@ export default function Contact() {
 
           <a
             href="tel:+5521986515747"
-            className="flex items-center gap-2 px-6 py-3 border border-[#333] hover:border-[#555] text-[#888] hover:text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 px-6 py-3 border border-[#d0d0d0] dark:border-[#333] hover:border-[#999] dark:hover:border-[#555] text-[#555] dark:text-[#888] hover:text-[#111] dark:hover:text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto justify-center"
           >
             <Phone size={16} />
             +55 21 98651-5747

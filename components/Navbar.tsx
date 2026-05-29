@@ -41,14 +41,14 @@ export default function Navbar() {
           transition={{ duration: 0.3 }}
           className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
             scrolled
-              ? "bg-[#0a0a0a]/90 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#222]"
+              ? "bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#e5e5e5] dark:border-[#222]"
               : "bg-transparent"
           }`}
         >
           <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="font-bold text-lg tracking-tight text-[#f0f0f0] hover:text-white transition-colors font-mono"
+              className="font-bold text-lg tracking-tight text-[#111] dark:text-[#f0f0f0] hover:text-black dark:hover:text-white transition-colors font-mono"
             >
               CFJ
             </button>
@@ -58,7 +58,7 @@ export default function Navbar() {
                 <button
                   key={link.id}
                   onClick={() => scrollTo(link.id)}
-                  className="text-sm text-[#888] hover:text-[#f0f0f0] transition-colors duration-200"
+                  className="text-sm text-[#555] dark:text-[#888] hover:text-[#111] dark:hover:text-[#f0f0f0] transition-colors duration-200"
                 >
                   {link.label}
                 </button>

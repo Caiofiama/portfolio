@@ -17,20 +17,20 @@ export default function ProjectCard({ project, index }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative flex flex-col bg-[#111] border border-[#222] rounded-xl overflow-hidden hover:border-[#333] transition-colors duration-300"
+      className="group relative flex flex-col bg-[#f8f8f8] dark:bg-[#111] border border-[#e5e5e5] dark:border-[#222] rounded-xl overflow-hidden hover:border-[#ccc] dark:hover:border-[#333] transition-colors duration-300"
     >
       {/* Thumbnail */}
       <div className={`relative h-36 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
         <span className="text-5xl select-none">{project.icon}</span>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#111] to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] dark:from-[#111] to-transparent" />
       </div>
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5 pt-4">
-        <h3 className="text-[#f0f0f0] font-semibold text-lg mb-2 group-hover:text-white transition-colors">
+        <h3 className="text-[#111] dark:text-[#f0f0f0] font-semibold text-lg mb-2 group-hover:text-black dark:group-hover:text-white transition-colors">
           {project.name}
         </h3>
-        <p className="text-[#888] text-sm leading-relaxed mb-4 flex-1">
+        <p className="text-[#555] dark:text-[#888] text-sm leading-relaxed mb-4 flex-1">
           {project.description}
         </p>
 
@@ -50,17 +50,17 @@ export default function ProjectCard({ project, index }: Props) {
             href={project.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[#f0f0f0] hover:text-[#2E75B6] transition-colors duration-200"
+            className="flex items-center gap-1.5 text-sm text-[#111] dark:text-[#f0f0f0] hover:text-[#2E75B6] dark:hover:text-[#2E75B6] transition-colors duration-200"
           >
             <ExternalLink size={14} />
             Demo ao vivo
           </a>
-          <span className="text-[#333]">·</span>
+          <span className="text-[#ccc] dark:text-[#333]">·</span>
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[#888] hover:text-[#f0f0f0] transition-colors duration-200"
+            className="flex items-center gap-1.5 text-sm text-[#555] dark:text-[#888] hover:text-[#111] dark:hover:text-[#f0f0f0] transition-colors duration-200"
           >
             <GithubIcon size={14} />
             Código

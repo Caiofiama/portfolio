@@ -14,7 +14,7 @@ export default function About() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-sm font-mono text-[#2E75B6] mb-3">01. sobre</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#f0f0f0] mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#111] dark:text-[#f0f0f0] mb-8">
             Um pouco sobre mim
           </h2>
         </motion.div>
@@ -25,7 +25,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[#888] leading-relaxed"
+            className="text-[#555] dark:text-[#888] leading-relaxed"
           >
             Apaixonado por computação e tecnologia desde os 12 anos de idade.
             Brasileiro, morando no Rio de Janeiro, me especializo em construir interfaces
@@ -37,7 +37,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-[#888] leading-relaxed"
+            className="text-[#555] dark:text-[#888] leading-relaxed"
           >
             Minha abordagem com desenvolvimento assistido por IA trata Claude e Cursor
             como ferramentas de alta performance — eu defino a arquitetura, tomo cada
@@ -55,10 +55,10 @@ export default function About() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="p-5 rounded-xl border border-[#222] bg-[#111] text-center"
+              className="p-5 rounded-xl border border-[#e5e5e5] dark:border-[#222] bg-[#f8f8f8] dark:bg-[#111] text-center"
             >
               <p className="text-2xl font-bold text-[#2E75B6] mb-1">{stat.value}</p>
-              <p className="text-xs text-[#888] leading-tight">{stat.label}</p>
+              <p className="text-xs text-[#555] dark:text-[#888] leading-tight">{stat.label}</p>
             </div>
           ))}
         </motion.div>

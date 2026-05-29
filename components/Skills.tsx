@@ -16,7 +16,7 @@ export default function Skills() {
           className="mb-12"
         >
           <p className="text-sm font-mono text-[#2E75B6] mb-3">03. habilidades</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#f0f0f0]">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#111] dark:text-[#f0f0f0]">
             Com o que eu trabalho
           </h2>
         </motion.div>
@@ -30,7 +30,7 @@ export default function Skills() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: catIndex * 0.05 }}
             >
-              <p className="text-xs text-[#555] uppercase tracking-widest mb-3 font-mono">
+              <p className="text-xs text-[#999] dark:text-[#555] uppercase tracking-widest mb-3 font-mono">
                 {category.name}
               </p>
               <div className="flex flex-wrap gap-2">
