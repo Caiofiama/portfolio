@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Download } from "lucide-react";
 import GithubIcon from "./icons/GithubIcon";
 
-const TITLE = "Engenheiro Front-End · Especialista em Desenvolvimento com IA";
+const TITLE = "Engenheiro Front-End";
 
 export default function Hero() {
   const [displayed, setDisplayed] = useState("");
@@ -30,10 +30,10 @@ export default function Hero() {
     >
       {/* Animated background grid */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.06] dark:opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px)",
+            "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -47,7 +47,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-[#f0f0f0] mb-4">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-[#111] dark:text-[#f0f0f0] mb-4">
             Caio Fiama Jeronimo
           </h1>
         </motion.div>
@@ -63,7 +63,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6, duration: 0.6 }}
-          className="text-[#888] text-lg max-w-xl mx-auto mb-10"
+          className="text-[#555] dark:text-[#888] text-lg max-w-xl mx-auto mb-10"
         >
           Construo interfaces de nível produção — usando IA como ferramenta de alta performance em engenharia.
         </motion.p>
@@ -87,7 +87,7 @@ export default function Hero() {
           <a
             href="/cv.pdf"
             download
-            className="px-6 py-3 border border-[#333] hover:border-[#555] text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+            className="px-6 py-3 border border-[#d0d0d0] dark:border-[#333] hover:border-[#999] dark:hover:border-[#555] text-[#111] dark:text-[#f0f0f0] rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
           >
             Baixar CV
             <Download size={16} />
@@ -97,7 +97,7 @@ export default function Hero() {
             href="https://github.com/Caiofiama"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 flex items-center justify-center border border-[#333] hover:border-[#555] text-[#888] hover:text-[#f0f0f0] rounded-lg transition-all duration-200"
+            className="w-12 h-12 flex items-center justify-center border border-[#d0d0d0] dark:border-[#333] hover:border-[#999] dark:hover:border-[#555] text-[#555] dark:text-[#888] hover:text-[#111] dark:hover:text-[#f0f0f0] rounded-lg transition-all duration-200"
             aria-label="GitHub"
           >
             <GithubIcon size={20} />
@@ -115,7 +115,7 @@ export default function Hero() {
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
         >
-          <ArrowDown size={20} className="text-[#444]" />
+          <ArrowDown size={20} className="text-[#bbb] dark:text-[#444]" />
         </motion.div>
       </motion.div>
     </section>

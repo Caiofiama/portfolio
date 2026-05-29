@@ -64,15 +64,6 @@ export const skillCategories: SkillCategory[] = [
     name: "Ferramentas",
     skills: ["Vite", "Git", "GitHub", "Vercel", "Chromatic", "dnd-kit"],
   },
-  {
-    name: "Desenvolvimento com IA",
-    skills: [
-      "Cursor",
-      "Claude",
-      "Engenharia de Prompt",
-      "Revisão de Código & Decisões de Arquitetura",
-    ],
-  },
 ];
 
 export const stats = [
