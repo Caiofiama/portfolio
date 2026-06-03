@@ -19,7 +19,7 @@ export default function Contact() {
             Vamos trabalhar juntos
           </h2>
           <p className="text-[#555] dark:text-[#888] mb-10">
-            Aberto a oportunidades remotas de front-end.
+            Aberto a oportunidades remotas de desenvolvimento full stack.
           </p>
         </motion.div>
 

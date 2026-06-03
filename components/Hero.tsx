@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Download } from "lucide-react";
 import GithubIcon from "./icons/GithubIcon";
 
-const TITLE = "Engenheiro Front-End";
+const TITLE = "Engenheiro Full Stack";
 
 export default function Hero() {
   const [displayed, setDisplayed] = useState("");
@@ -65,7 +65,7 @@ export default function Hero() {
           transition={{ delay: 1.6, duration: 0.6 }}
           className="text-[#555] dark:text-[#888] text-lg max-w-xl mx-auto mb-10"
         >
-          Construo interfaces de nível produção — usando IA como ferramenta de alta performance em engenharia.
+          Construo aplicações full stack completas — usando IA como ferramenta de alta performance em engenharia.
         </motion.p>
 
         <motion.div

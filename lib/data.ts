@@ -66,29 +66,33 @@ export const projects: Project[] = [
 export const skillCategories: SkillCategory[] = [
   {
     name: "Linguagens & Frameworks",
-    skills: ["React 18", "TypeScript", "Next.js", "JavaScript (ES2022+)"],
+    skills: ["React 18", "TypeScript", "Next.js 14", "JavaScript (ES2022+)", "Node.js"],
   },
   {
-    name: "Estilização",
-    skills: ["TailwindCSS", "Framer Motion", "CSS Modules"],
+    name: "Back-End & Banco de Dados",
+    skills: ["PostgreSQL", "Prisma ORM", "JWT", "Stripe (Webhooks)", "Zod", "REST API"],
   },
   {
     name: "Estado & Dados",
-    skills: ["Zustand", "TanStack Query", "React Query", "Sincronização via URL"],
+    skills: ["Zustand", "TanStack Query", "React Query", "Sincronização via URL", "react-hook-form"],
   },
   {
     name: "UI & Design",
-    skills: ["Storybook", "Design Systems", "Recharts", "Acessibilidade (ARIA)"],
+    skills: ["TailwindCSS", "Framer Motion", "Storybook", "Design Systems", "Recharts", "Acessibilidade (ARIA)"],
   },
   {
     name: "Ferramentas",
-    skills: ["Vite", "Git", "GitHub", "Vercel", "Chromatic", "dnd-kit"],
+    skills: ["Git", "GitHub", "Vercel", "Jest", "Chromatic", "dnd-kit", "Neon"],
+  },
+  {
+    name: "Desenvolvimento com IA",
+    skills: ["Cursor", "Claude", "Prompt Engineering", "Revisão de Arquitetura"],
   },
 ];
 
 export const stats = [
-  { label: "Projetos Entregues", value: "4+" },
-  { label: "Deploys em Produção", value: "4" },
-  { label: "Biblioteca de Componentes", value: "1" },
+  { label: "Projetos Entregues", value: "6+" },
+  { label: "Deploys em Produção", value: "6" },
+  { label: "Apps Full Stack", value: "2" },
   { label: "Componentes Documentados", value: "14+" },
 ];

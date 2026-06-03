@@ -27,9 +27,9 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[#555] dark:text-[#888] leading-relaxed"
           >
-            Apaixonado por computação e tecnologia desde os 12 anos de idade.
-            Brasileiro, morando no Rio de Janeiro, me especializo em construir interfaces
-            polidas e performáticas com React, TypeScript e ferramentas modernas.
+            Apaixonado por tecnologia desde os 12 anos. Especializado em construir
+            aplicações full stack com React, Next.js, PostgreSQL e integração com
+            serviços como Stripe.
           </motion.p>
 
           <motion.p
@@ -39,9 +39,8 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-[#555] dark:text-[#888] leading-relaxed"
           >
-            Minha abordagem com desenvolvimento assistido por IA trata Claude e Cursor
-            como ferramentas de alta performance — eu defino a arquitetura, tomo cada
-            decisão e reviso cada linha. O trabalho é meu.
+            Minha abordagem com IA trata Claude e Cursor como ferramentas de engenharia
+            — eu defino a arquitetura, tomo cada decisão e reviso cada linha.
           </motion.p>
         </div>
 

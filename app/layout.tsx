@@ -16,14 +16,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Caio Fiama Jeronimo — Engenheiro Front-End",
+  title: "Caio Fiama Jeronimo — Engenheiro Full Stack",
   description:
-    "Engenheiro Front-End e Especialista em Desenvolvimento Assistido por IA. Construindo interfaces de produção com React, TypeScript e Next.js.",
-  keywords: ["Engenheiro Front-End", "React", "TypeScript", "Next.js", "Portfólio"],
+    "Engenheiro Full Stack e Especialista em Desenvolvimento Assistido por IA. Construindo aplicações completas com React, Next.js, PostgreSQL e Stripe.",
+  keywords: ["Engenheiro Full Stack", "React", "TypeScript", "Next.js", "PostgreSQL", "Portfólio"],
   authors: [{ name: "Caio Fiama Jeronimo" }],
   openGraph: {
-    title: "Caio Fiama Jeronimo — Engenheiro Front-End",
-    description: "Construindo interfaces de produção — usando IA como ferramenta de alta performance.",
+    title: "Caio Fiama Jeronimo — Engenheiro Full Stack",
+    description: "Construindo aplicações full stack completas — usando IA como ferramenta de alta performance.",
     type: "website",
   },
 };
