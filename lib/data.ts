@@ -41,6 +41,16 @@ export const projects: Project[] = [
     icon: "📋",
     gradient: "from-green-500/20 to-teal-500/20",
   },
+  {
+    name: "FinTrack Pro",
+    description:
+      "App de finanças pessoais full-stack com autenticação JWT, dashboard interativo, controle de orçamentos e metas financeiras.",
+    stack: ["Next.js 14", "TypeScript", "PostgreSQL", "Prisma", "Recharts", "TailwindCSS", "JWT"],
+    live: "https://fintrack-pro-nu.vercel.app/login",
+    github: "https://github.com/Caiofiama/fintrack-pro",
+    icon: "💰",
+    gradient: "from-emerald-500/20 to-green-500/20",
+  },
 ];
 
 export const skillCategories: SkillCategory[] = [
