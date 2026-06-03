@@ -2,6 +2,16 @@ import { Project, SkillCategory } from "@/types";
 
 export const projects: Project[] = [
   {
+    name: "DevLinks",
+    description:
+      "Plataforma SaaS de link-in-bio com planos Free e Pro via Stripe. Autenticação JWT, webhooks, Customer Portal e analytics de cliques.",
+    stack: ["Next.js 14", "TypeScript", "PostgreSQL", "Prisma", "Stripe", "JWT", "TailwindCSS"],
+    live: "https://devlinks1.vercel.app/login",
+    github: "https://github.com/Caiofiama/devlinks",
+    icon: "🔗",
+    gradient: "from-violet-500/20 to-purple-500/20",
+  },
+  {
     name: "CryptoScope",
     description:
       "Dashboard de análise de criptomoedas em tempo real com gráficos, cards de KPI e páginas de detalhe por moeda.",
