@@ -2,6 +2,16 @@ import { Project, SkillCategory } from "@/types";
 
 export const projects: Project[] = [
   {
+    name: "B2B Flow",
+    description:
+      "Plataforma SaaS B2B de Gestão de Clientes e Inteligência Comercial. Arquitetura limpa em .NET 8 Web API, CQRS com MediatR, funil de vendas Kanban drag-and-drop, dashboard de KPIs interativo e assistente de IA para automação de e-mails de follow-up.",
+    stack: [".NET 8", "Next.js 14", "TypeScript", "Clean Arch", "CQRS / MediatR", "PostgreSQL", "TailwindCSS", "IA / LLM"],
+    live: "https://b2b-flow-ilqhdju27-caiofiamas-projects.vercel.app",
+    github: "https://github.com/Caiofiama/b2b-flow",
+    icon: "📊",
+    gradient: "from-indigo-500/20 to-blue-500/20",
+  },
+  {
     name: "DevLinks",
     description:
       "Plataforma SaaS de link-in-bio com planos Free e Pro via Stripe. Autenticação JWT, webhooks, Customer Portal e analytics de cliques.",
@@ -66,11 +76,11 @@ export const projects: Project[] = [
 export const skillCategories: SkillCategory[] = [
   {
     name: "Linguagens & Frameworks",
-    skills: ["React 18", "TypeScript", "Next.js 14", "JavaScript (ES2022+)", "Node.js"],
+    skills: ["React 18", "TypeScript", "Next.js 14", "C# / .NET 8", "JavaScript (ES2022+)", "Node.js"],
   },
   {
     name: "Back-End & Banco de Dados",
-    skills: ["PostgreSQL", "Prisma ORM", "JWT", "Stripe (Webhooks)", "Zod", "REST API"],
+    skills: [".NET 8 Web API", "Clean Architecture", "CQRS / MediatR", "PostgreSQL", "EF Core", "Prisma ORM", "JWT", "Stripe (Webhooks)", "Zod", "REST API"],
   },
   {
     name: "Estado & Dados",
@@ -78,21 +88,21 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     name: "UI & Design",
-    skills: ["TailwindCSS", "Framer Motion", "Storybook", "Design Systems", "Recharts", "Acessibilidade (ARIA)"],
+    skills: ["TailwindCSS", "Shadcn/UI", "Framer Motion", "Storybook", "Design Systems", "Recharts", "Acessibilidade (ARIA)"],
   },
   {
     name: "Ferramentas",
-    skills: ["Git", "GitHub", "Vercel", "Jest", "Chromatic", "dnd-kit", "Neon"],
+    skills: ["Git", "GitHub", "Vercel", "Render", "Jest", "Chromatic", "dnd-kit", "Neon"],
   },
   {
     name: "Desenvolvimento com IA",
-    skills: ["Cursor", "Claude", "Prompt Engineering", "Revisão de Arquitetura"],
+    skills: ["Cursor", "Claude", "Integração LLM / IA Assistida", "Prompt Engineering", "Revisão de Arquitetura"],
   },
 ];
 
 export const stats = [
-  { label: "Projetos Entregues", value: "6+" },
-  { label: "Deploys em Produção", value: "6" },
-  { label: "Apps Full Stack", value: "2" },
+  { label: "Projetos Entregues", value: "7+" },
+  { label: "Deploys em Produção", value: "7" },
+  { label: "Apps Full Stack", value: "3" },
   { label: "Componentes Documentados", value: "14+" },
 ];
