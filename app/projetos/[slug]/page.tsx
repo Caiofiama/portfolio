@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import Clip from "@/components/site/Clip";
 import Closing from "@/components/site/Closing";
 import Nav from "@/components/site/Nav";
-import ProjectVisual, { Picture } from "@/components/site/ProjectVisual";
+import ProjectVisual, { Diagram, Picture } from "@/components/site/ProjectVisual";
 import { featuredProjects, getProject } from "@/content/projects";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -34,6 +34,8 @@ export default async function CasePage({ params }: Props) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
+  // When the hero shows a code excerpt, the architecture diagram moves to the lower block.
+  const lowerDiagram = project.snippet && !project.image ? project.diagram : undefined;
 
   const index = featuredProjects.indexOf(project);
   const next = featuredProjects[(index + 1) % featuredProjects.length];
@@ -115,7 +117,7 @@ export default async function CasePage({ params }: Props) {
           </div>
         </section>
 
-        {(project.fixes || project.secondClip || project.secondImage) && (
+        {(project.fixes || project.secondClip || project.secondImage || lowerDiagram) && (
           <section className="section">
             <div className="wrap grid gap-x-6 gap-y-12 lg:grid-cols-12">
               {project.fixes && (
@@ -129,6 +131,11 @@ export default async function CasePage({ params }: Props) {
                       </li>
                     ))}
                   </ol>
+                </div>
+              )}
+              {lowerDiagram && (
+                <div className="lg:col-span-8">
+                  <Diagram diagram={lowerDiagram} round />
                 </div>
               )}
               {(project.secondClip || project.secondImage) && (

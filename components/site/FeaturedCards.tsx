@@ -11,8 +11,8 @@ export default function FeaturedCards() {
         <h2 className="h2">Projetos em destaque</h2>
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:mt-14">
           {featuredProjects.map((project) => (
-            <li key={project.slug} className="flex">
-              <Link href={`/projetos/${project.slug}`} className="card w-full">
+            <li key={project.slug} className="flex min-w-0">
+              <Link href={`/projetos/${project.slug}`} className="card w-full min-w-0">
                 <ProjectVisual project={project} sizes="(min-width: 768px) 50vw, 100vw" />
                 <div className="flex flex-1 flex-col p-6 lg:p-8">
                   <p className="label text-accent">{project.status}</p>

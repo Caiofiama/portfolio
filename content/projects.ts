@@ -26,6 +26,16 @@ export type ProjectDiagram = {
   boxes: { name: string; detail: string; arrow?: "right" | "left" }[];
 };
 
+/** A real excerpt from the project's repository, shown in a code frame. */
+export type ProjectSnippet = {
+  /** Where the excerpt comes from, shown as the frame's tab. */
+  source: string;
+  /** What the excerpt shows, in one sentence, for screen readers. */
+  label: string;
+  /** The excerpt; lines elided from the original are marked with an ellipsis comment. */
+  code: string;
+};
+
 export type FeaturedProject = {
   slug: string;
   name: string;
@@ -42,6 +52,8 @@ export type FeaturedProject = {
   /** Shown on the case page in place of `image` and `secondImage`. */
   clip?: ProjectClip;
   secondClip?: ProjectClip;
+  /** Shown on the card and the case hero when there is no screen; the diagram then moves lower on the case page. */
+  snippet?: ProjectSnippet;
   diagram?: ProjectDiagram;
   links: ProjectLink[];
   problem: string;
@@ -200,6 +212,20 @@ export const featuredProjects: FeaturedProject[] = [
     status: "Código público",
     summary: "Clean Architecture, CQRS e JWT, testada com xUnit e Testcontainers.",
     fact: "Mais de 50 testes",
+    // From the "Exemplos de Request / Response" section of the repository's README.
+    snippet: {
+      source: "README · criar tarefa",
+      label: "Exemplo do README da TeamTask API: um POST em /api/tasks com token Bearer cria a tarefa e a API responde 201 Created com o id, o status e a data de criação.",
+      code: `POST /api/tasks
+Authorization: Bearer <token>
+{ "title": "Implementar endpoint de relatório",
+  "priority": 3,
+  "dueDate": "2026-07-01T00:00:00Z" }
+
+201 Created
+{ "id": "...", "status": 1, "priority": 3,
+  "createdAt": "2026-06-04T10:00:00Z" }`,
+    },
     diagram: {
       title: "Camadas e dependências",
       label: "As quatro camadas da TeamTask API: a Api depende da Application, que depende do Domain; a Infrastructure também depende do Domain.",
@@ -246,6 +272,23 @@ export const featuredProjects: FeaturedProject[] = [
     status: "Protótipo",
     summary: "Protótipo com API em .NET 8 e interface em Next.js.",
     fact: ".NET 8 e Next.js",
+    // From frontend/src/components/pipeline/KanbanBoard.tsx, handleDragEnd.
+    snippet: {
+      source: "KanbanBoard.tsx · trecho",
+      label: "Trecho do funil Kanban do B2B Flow: o card muda de estágio na tela na hora, a API recebe um PATCH com o novo estágio e, se ela falhar, o funil volta ao estado anterior.",
+      code: `// Optimistic UI update
+setPipeline((prev) => { /* … */ });
+
+try {
+  await apiFetch(\`/opportunities/\${activeId}/stage\`, {
+    method: 'PATCH',
+    body: JSON.stringify({ stage: targetStage }),
+  });
+} catch {
+  // Rollback on failure
+  setPipeline(initialPipeline);
+}`,
+    },
     diagram: {
       title: "Do navegador ao banco",
       label: "As três partes do B2B Flow: a interface em Next.js chama a API em .NET 8, que grava no PostgreSQL.",

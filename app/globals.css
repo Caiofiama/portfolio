@@ -728,6 +728,111 @@ html.lenis body {
     }
   }
 
+  /* ---------- Code excerpt (projects with no screen) ---------- */
+
+  .frame--code {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+    background: rgb(12 12 14);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .code__tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--muted);
+  }
+
+  .code__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--signal);
+  }
+
+  .code {
+    flex: 1;
+    margin: 0;
+    padding: 18px 20px 22px;
+    /* Narrow screens: long lines scroll sideways, like an editor, instead of breaking mid-token. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 18px;
+    color: var(--fg);
+    white-space: pre;
+    tab-size: 2;
+    font-variant-ligatures: none;
+  }
+
+  .code__comment {
+    color: var(--muted);
+  }
+
+  .code__string {
+    color: var(--accent);
+  }
+
+  .code__keyword {
+    font-weight: 700;
+  }
+
+  .code__status {
+    color: var(--signal);
+    font-weight: 700;
+  }
+
+  /* Two cards a row from 768: the frame keeps one height so both cards line up. */
+  @media (min-width: 768px) {
+    .frame--code {
+      min-height: 300px;
+    }
+
+    .code {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .code > code {
+      width: max-content;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .frame--code {
+      aspect-ratio: 16 / 10;
+      min-height: 0;
+    }
+
+    .code {
+      padding-block: 10px 12px;
+      font-size: 12px;
+      line-height: 17px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .code {
+      padding: 22px 28px 26px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .code__tab {
+      padding-inline: 28px;
+    }
+  }
+
   /* ---------- Case pages ---------- */
 
   .case-hero {
