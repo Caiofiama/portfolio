@@ -30,12 +30,25 @@ const securityHeaders = [
   ...(process.env.NODE_ENV === "production" ? [{ key: "Content-Security-Policy", value: csp }] : []),
 ];
 
+// The 3D model, posters, project pictures and clips rarely change: browsers keep them for 30 days
+// instead of asking again on every visit. They are not content-hashed, so a file that changes
+// should get a new name. The résumé PDF is left out on purpose: it is replaced often.
+const MONTH = 60 * 60 * 24 * 30;
+const longCache = [{ key: "Cache-Control", value: `public, max-age=${MONTH}` }];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
   poweredByHeader: false,
+  // Resized pictures from the image optimizer are kept for the same 30 days.
+  images: { minimumCacheTTL: MONTH },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: "/office/:file*", headers: longCache },
+      { source: "/clips/:file*", headers: longCache },
+      { source: "/projetos/:file(.+\\.webp)", headers: longCache },
+    ];
   },
 };
 
