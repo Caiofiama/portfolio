@@ -26,10 +26,14 @@ const DESKS: [number, number][] = [
   [1.1, 0.95],
 ];
 
-/** On wide screens the office moves right, clear of the words. Share of the canvas width. */
-const SHIFT = 0.21;
-/** And a little down, towards the middle of the space under the header. */
-const DROP = 0.02;
+/** On wide screens the office moves right of the words, by this many pixels from the centre. */
+const SHIFT_PX = 290;
+/** Right edge of the hero text, measured from the page gutter (the lead is about 540px wide). */
+const TEXT_WIDTH = 560;
+/** The room's width on screen at zoom 1, as a share of the canvas height. */
+const ROOM_SHARE = 0.82;
+/** And a little up, so the room sits between the header and the project cards. */
+const DROP = -0.035;
 
 type Pose = { position: THREE.Vector3; target: THREE.Vector3 };
 
@@ -42,22 +46,28 @@ function pose(target: [number, number, number], distance: number, elevation: num
 }
 
 /** The whole office at the top of the page, then closer to the desks as the hero scrolls away. */
-const START = pose([W / 2, 0.4, D / 2], 13, 32, 38);
+const START = pose([W / 2, 0.4, D / 2], 12.5, 32, 38);
 const END = pose([W / 2, 0.5, D / 2 - 0.2], 10.2, 24, 28);
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
+
+/** Length of the camera entrance, in seconds. */
+const INTRO = 1.6;
+const UP = new THREE.Vector3(0, 1, 0);
+/** How lit the first desk is when nothing is in focus (1 is fully orange). */
+const IDLE_GLOW = 1;
 
 /** Night colours for the Kenney material names. */
 function makePalette() {
   const flat = (color: string, roughness = 0.85) => new THREE.MeshStandardMaterial({ color, roughness });
   const palette: Record<string, THREE.MeshStandardMaterial> = {
-    wood: flat("#2f323d"),
-    woodDark: flat("#20222a"),
+    wood: flat("#3b3f4d"),
+    woodDark: flat("#2a2d37"),
     metal: flat("#7b8494", 0.5),
     metalDark: flat("#16181e", 0.6),
     metalMedium: flat("#3f4350", 0.6),
     plant: flat("#2e7466"),
-    carpet: flat("#1d1f27", 1),
+    carpet: flat("#262a35", 1),
     carpetDarker: flat("#16181e", 1),
     glass: new THREE.MeshStandardMaterial({ color: "#3fe0ff", transparent: true, opacity: 0.25, roughness: 0.2 }),
     _defaultMat: flat("#2f323d"),
@@ -182,6 +192,9 @@ function Office({ onReady, still }: { onReady?: () => void; still: boolean }) {
   const glow = useRef(featuredProjects.map(() => 0));
   const progress = useRef(still ? 0 : heroStore.progress);
   const announced = useRef(false);
+  /** Seconds since the scene appeared; drives the short camera entrance. */
+  const introTime = useRef(still ? INTRO : 0);
+  const offset = useRef(new THREE.Vector3());
   const look = useRef(new THREE.Vector3());
   const point = useRef(new THREE.Vector3());
 
@@ -203,8 +216,19 @@ function Office({ onReady, still }: { onReady?: () => void; still: boolean }) {
 
   useLayoutEffect(() => {
     const cam = camera as THREE.PerspectiveCamera;
-    if (size.width >= 1024) cam.setViewOffset(size.width, size.height, -size.width * SHIFT, -size.height * DROP, size.width, size.height);
-    else cam.clearViewOffset();
+    if (size.width >= 1024) {
+      // Shrink the room until it fits in the space right of the text, then centre it there.
+      const gutter = size.width >= 1280 ? 80 : 48;
+      const free = size.width - gutter * 2 - TEXT_WIDTH;
+      cam.zoom = Math.min(1, free / (ROOM_SHARE * size.height));
+      // Wider than 1440 the shift grows with the width, so the poster shot at 1600 lines up with it.
+      const shift = SHIFT_PX * Math.max(1, size.width / 1440);
+      cam.setViewOffset(size.width, size.height, -shift, -size.height * DROP, size.width, size.height);
+    } else {
+      cam.zoom = 1;
+      cam.clearViewOffset();
+    }
+    cam.updateProjectionMatrix();
     invalidate();
   }, [camera, size, invalidate]);
 
@@ -219,19 +243,30 @@ function Office({ onReady, still }: { onReady?: () => void; still: boolean }) {
     } else progress.current = goal;
     const t = smooth(progress.current);
     camera.position.lerpVectors(START.position, END.position, t);
-    camera.lookAt(look.current.lerpVectors(START.target, END.target, t));
+    look.current.lerpVectors(START.target, END.target, t);
+    // Entrance: the camera starts a little farther out and turned, and settles in once.
+    if (introTime.current < INTRO) {
+      introTime.current = Math.min(INTRO, introTime.current + Math.min(delta, 0.05));
+      const d = 1 - smooth(introTime.current / INTRO);
+      offset.current.subVectors(camera.position, look.current).multiplyScalar(1 + 0.2 * d);
+      offset.current.applyAxisAngle(UP, 0.22 * d);
+      camera.position.addVectors(look.current, offset.current);
+      moving = true;
+    }
+    camera.lookAt(look.current);
     camera.updateMatrixWorld();
 
     const active = heroStore.getActive();
     featuredProjects.forEach((project, i) => {
-      const want = project.slug === active ? 1 : 0;
+      // With nothing in focus, the live product (the first desk) stays lit in the signal colour.
+      const want = active ? (project.slug === active ? 1 : 0) : i === 0 ? IDLE_GLOW : 0;
       if (Math.abs(want - glow.current[i]) > 0.002) {
         glow.current[i] += (want - glow.current[i]) * k;
         moving = true;
       } else glow.current[i] = want;
       const v = glow.current[i];
       screens[i].emissive.lerpColors(ACCENT, SIGNAL, v);
-      screens[i].emissiveIntensity = 1 + v * 0.6;
+      screens[i].emissiveIntensity = 1 + v * 0.15;
       const light = lights.current[i];
       if (light) {
         light.color.lerpColors(ACCENT, SIGNAL, v);
@@ -258,11 +293,11 @@ function Office({ onReady, still }: { onReady?: () => void; still: boolean }) {
 
   return (
     <group>
-      <hemisphereLight args={["#a9c2ff", "#12141a", 2.4]} />
+      <hemisphereLight args={["#a9c2ff", "#14161d", 2.8]} />
       <directionalLight
         position={[W / 2 + 2.5, 6, D / 2 + 3.5]}
         color="#d6e2ff"
-        intensity={3}
+        intensity={3.4}
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0005}
@@ -278,16 +313,27 @@ function Office({ onReady, still }: { onReady?: () => void; still: boolean }) {
       {/* The room: a floor slab and two low back walls. */}
       <mesh position={[W / 2, -0.06, D / 2]} receiveShadow>
         <boxGeometry args={[W + 0.3, 0.12, D + 0.3]} />
-        <meshStandardMaterial color="#15171d" roughness={0.95} />
+        <meshStandardMaterial color="#1c1f27" roughness={0.95} />
       </mesh>
       <mesh position={[W / 2, 0.6, -0.1]} receiveShadow castShadow>
         <boxGeometry args={[W + 0.3, 1.2, 0.1]} />
-        <meshStandardMaterial color="#20232b" roughness={0.95} />
+        <meshStandardMaterial color="#2b2f3a" roughness={0.95} />
       </mesh>
       <mesh position={[-0.1, 0.6, D / 2 - 0.05]} receiveShadow castShadow>
         <boxGeometry args={[0.1, 1.2, D + 0.2]} />
-        <meshStandardMaterial color="#20232b" roughness={0.95} />
+        <meshStandardMaterial color="#2b2f3a" roughness={0.95} />
       </mesh>
+
+      {/* A cyan light strip along the top of both walls, and the glow it throws into the corner. */}
+      <mesh position={[W / 2, 1.18, -0.035]}>
+        <boxGeometry args={[W + 0.3, 0.035, 0.03]} />
+        <meshBasicMaterial color={ACCENT} toneMapped={false} />
+      </mesh>
+      <mesh position={[-0.035, 1.18, D / 2 - 0.05]}>
+        <boxGeometry args={[0.03, 0.035, D + 0.2]} />
+        <meshBasicMaterial color={ACCENT} toneMapped={false} />
+      </mesh>
+      <pointLight position={[0.5, 1.05, 0.5]} color={ACCENT} intensity={1.4} distance={3.6} decay={2} />
 
       <Model kit={kit} palette={palette} name="rugRectangle" position={[W / 2 - 0.05, 0.002, D / 2 - 0.05]} scale={[1.6, 1, 2]} />
       <Model kit={kit} palette={palette} name="bookcaseOpen" position={[W / 2 - 0.05, 0, 0.16]} />

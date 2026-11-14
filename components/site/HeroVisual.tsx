@@ -100,8 +100,8 @@ export default function HeroVisual() {
         <img
           className="hero__poster"
           src="/office/poster-mobile.webp"
-          width={1300}
-          height={1000}
+          width={1040}
+          height={800}
           alt="Escritório em 3D com quatro mesas, uma para cada projeto em destaque, com os monitores acesos."
           fetchPriority="high"
           decoding="async"
