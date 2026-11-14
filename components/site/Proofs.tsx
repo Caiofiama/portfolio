@@ -10,9 +10,14 @@ export default function Proofs() {
         </h2>
         <dl className="proofs__list">
           {proofs.map((proof) => (
-            <div key={proof.label} className="flex flex-col-reverse justify-end">
+            <div key={proof.label} className="flex flex-col-reverse justify-end" data-reveal>
               <dt className="proofs__label">{proof.label}</dt>
-              <dd className="proofs__value">{proof.value}</dd>
+              <dd className="proofs__value">
+                <span className="sr-only">{proof.value}</span>
+                <span aria-hidden="true" data-count>
+                  {proof.value}
+                </span>
+              </dd>
             </div>
           ))}
         </dl>

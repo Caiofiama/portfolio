@@ -13,15 +13,16 @@ export default function Closing() {
       <div className="wrap flex flex-1 flex-col">
         <SectionTitle label="Contato" title="Vamos conversar sobre a sua vaga." />
         <a
+          data-reveal
           className="mt-8 inline-flex min-h-[44px] w-fit items-center break-all text-[clamp(24px,4.6vw,64px)] font-bold leading-tight tracking-tight text-accent underline decoration-1 underline-offset-[0.18em] lg:mt-12"
           href={`mailto:${person.email}`}
         >
           {person.email}
         </a>
-        <p className="mt-6 max-w-[34em] text-lg text-muted lg:text-xl">
+        <p data-reveal className="mt-6 max-w-[34em] text-lg text-muted lg:text-xl">
           {person.city}, RJ. {person.availability}
         </p>
-        <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-1 lg:mt-8">
+        <ul data-reveal className="mt-6 flex flex-wrap gap-x-8 gap-y-1 lg:mt-8">
           <li>
             <a className="link-draw" href={person.linkedin} target="_blank" rel="noopener noreferrer">
               <LinkedinIcon size={18} />

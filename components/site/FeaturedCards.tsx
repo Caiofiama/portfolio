@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Clip from "@/components/site/Clip";
 import ProjectVisual from "@/components/site/ProjectVisual";
 import { featuredProjects } from "@/content/projects";
 import SectionTitle from "@/components/site/SectionTitle";
@@ -12,9 +13,13 @@ export default function FeaturedCards() {
         <SectionTitle label="Projetos em destaque" title="Um SaaS no ar, um app em beta e dois códigos abertos." />
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:mt-14">
           {featuredProjects.map((project) => (
-            <li key={project.slug} className="flex min-w-0">
+            <li key={project.slug} className="flex min-w-0" data-reveal>
               <Link href={`/projetos/${project.slug}`} className="card w-full min-w-0">
-                <ProjectVisual project={project} sizes="(min-width: 768px) 50vw, 100vw" />
+                {project.clip ? (
+                  <Clip clip={project.clip} sizes="(min-width: 768px) 50vw, 100vw" bare />
+                ) : (
+                  <ProjectVisual project={project} sizes="(min-width: 768px) 50vw, 100vw" />
+                )}
                 <div className="flex flex-1 flex-col p-6 lg:p-8">
                   <p className="label text-accent">{project.status}</p>
                   <h3 className="h3 mt-2">{project.name}</h3>

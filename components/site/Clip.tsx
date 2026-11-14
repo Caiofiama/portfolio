@@ -17,8 +17,15 @@ export default function Clip({
   sizes,
   priority = false,
   round = false,
+  bare = false,
 }: {
   clip: ProjectClip;
+  /**
+   * Inside a link (a project card): no play button, since a button cannot sit inside a link, and
+   * the frame keeps the card's 16:10 shape. The still carries the description; the video is
+   * decoration on top of it.
+   */
+  bare?: boolean;
   /** How wide the clip is on screen, as for an image. */
   sizes: string;
   /** True for the clip at the top of a page. */
@@ -60,8 +67,18 @@ export default function Clip({
   };
 
   return (
-    <div className={`frame${round ? " frame--round" : ""}`} style={{ aspectRatio: `${clip.width} / ${clip.height}` }}>
-      <Image src={`/clips/${clip.name}.jpg`} alt="" width={clip.width} height={clip.height} sizes={sizes} priority={priority} />
+    <div
+      className={`frame${round ? " frame--round" : ""}`}
+      style={bare ? undefined : { aspectRatio: `${clip.width} / ${clip.height}` }}
+    >
+      <Image
+        src={`/clips/${clip.name}.jpg`}
+        alt={bare ? clip.alt : ""}
+        width={clip.width}
+        height={clip.height}
+        sizes={sizes}
+        priority={priority}
+      />
       <video
         ref={ref}
         muted
@@ -70,7 +87,9 @@ export default function Clip({
         preload="none"
         width={clip.width}
         height={clip.height}
-        aria-label={clip.alt}
+        aria-label={bare ? undefined : clip.alt}
+        aria-hidden={bare || undefined}
+        tabIndex={bare ? -1 : undefined}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       >
@@ -78,9 +97,11 @@ export default function Clip({
           <source key={ext} src={`/clips/${clip.name}.${ext}`} type={TYPES[ext]} />
         ))}
       </video>
-      <button type="button" className="clip__toggle" onClick={toggle} aria-label={playing ? "Pausar o clipe" : "Reproduzir o clipe"}>
-        {playing ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
-      </button>
+      {!bare && (
+        <button type="button" className="clip__toggle" onClick={toggle} aria-label={playing ? "Pausar o clipe" : "Reproduzir o clipe"}>
+          {playing ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
+        </button>
+      )}
     </div>
   );
 }

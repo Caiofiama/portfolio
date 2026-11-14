@@ -747,6 +747,56 @@ html.lenis body {
     }
   }
 
+  /* ---------- Content rising into view (classes set by ScrollEffects) ---------- */
+
+  .will-reveal {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .will-reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 500ms var(--ease-out),
+      transform 500ms var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* ---------- Hover details (mouse and trackpad only) ---------- */
+
+  @media (hover: hover) and (pointer: fine) {
+    /* A soft cyan light follows the pointer inside a card; the script sets --mx and --my. */
+    .card {
+      position: relative;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+      background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgb(63 224 255 / 0.1), transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    /* In a list of rows, the one under the pointer stays bright and the rest step back. */
+    .rows > .row {
+      transition: opacity 200ms ease;
+    }
+
+    .rows:hover > .row:not(:hover) {
+      opacity: 0.45;
+    }
+  }
+
   /* ---------- Rows (other projects, stack) ---------- */
 
   .row {
@@ -920,6 +970,8 @@ html.lenis body {
 
 @media (prefers-reduced-motion: reduce) {
   .card,
+  .card::after,
+  .rows > .row,
   .frame img,
   .card__go > span,
   .clip__toggle {

@@ -9,9 +9,9 @@ export default function OtherProjects() {
     <section id="outros-projetos" className="section">
       <div className="wrap">
         <SectionTitle label="Outros projetos" title="Projetos menores, todos com demo e código." />
-        <ul className="mt-10 border-t border-line lg:mt-14">
+        <ul className="rows mt-10 border-t border-line lg:mt-14">
           {otherProjects.map((project) => (
-            <li key={project.name} className="row grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-1 lg:grid-cols-12 lg:gap-x-6">
+            <li key={project.name} data-reveal className="row grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-1 lg:grid-cols-12 lg:gap-x-6">
               <h3 className="self-center text-lg font-bold leading-6 tracking-tight lg:col-span-3">{project.name}</h3>
               <p className="col-span-2 text-[15px] leading-6 text-muted lg:col-span-5">{project.description}</p>
               <p className="label col-span-2 mt-1 hidden text-muted sm:block lg:col-span-2 lg:mt-0">{project.stack.join(" · ")}</p>
