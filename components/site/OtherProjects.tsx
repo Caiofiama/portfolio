@@ -2,19 +2,19 @@ import { ArrowUpRight } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { otherProjects } from "@/content/projects";
 
-// Smaller projects, as a compact grid: what each one is, its stack and where to open it.
+// Smaller projects, as a compact list of rows: what each one is, its stack and where to open it.
 export default function OtherProjects() {
   return (
     <section id="outros-projetos" className="section">
       <div className="wrap">
         <h2 className="h2">Outros projetos</h2>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:mt-14 lg:grid-cols-3">
+        <ul className="mt-10 border-t border-line lg:mt-14">
           {otherProjects.map((project) => (
-            <li key={project.name} className="card p-6">
-              <h3 className="text-xl font-bold leading-7 tracking-tight">{project.name}</h3>
-              <p className="mt-2 text-[15px] leading-6 text-muted">{project.description}</p>
-              <p className="label mt-4 hidden text-muted sm:block">{project.stack.join(" · ")}</p>
-              <div className="mt-auto flex flex-wrap gap-x-6 pt-4">
+            <li key={project.name} className="row">
+              <h3 className="text-lg font-bold leading-7 tracking-tight lg:col-span-3">{project.name}</h3>
+              <p className="text-[15px] leading-6 text-muted lg:col-span-5">{project.description}</p>
+              <p className="label hidden text-muted sm:block lg:col-span-2">{project.stack.join(" · ")}</p>
+              <div className="flex flex-wrap gap-x-6 lg:col-span-2 lg:justify-end">
                 <a
                   className="link-draw text-[15px]"
                   href={project.live}
@@ -22,7 +22,7 @@ export default function OtherProjects() {
                   rel="noopener noreferrer"
                   aria-label={`Abrir demo: ${project.name}`}
                 >
-                  <span>Abrir demo</span>
+                  <span>Demo</span>
                   <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
                 <a
@@ -33,7 +33,7 @@ export default function OtherProjects() {
                   aria-label={`Ver código: ${project.name}`}
                 >
                   <GithubIcon size={16} />
-                  <span>Ver código</span>
+                  <span>Código</span>
                 </a>
               </div>
             </li>

@@ -728,6 +728,35 @@ html.lenis body {
     }
   }
 
+  /* ---------- Rows (other projects, stack) ---------- */
+
+  .row {
+    display: grid;
+    gap: 8px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: 1024px) {
+    .row {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: center;
+      column-gap: 24px;
+      padding-block: 18px;
+    }
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 6px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
   /* ---------- Code excerpt (projects with no screen) ---------- */
 
   .frame--code {

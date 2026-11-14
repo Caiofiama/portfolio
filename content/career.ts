@@ -33,6 +33,12 @@ export const jobs: Job[] = [
   },
 ];
 
+/** Shown beside the jobs. Both come from the dates and stages above, nothing else. */
+export const experienceFacts = [
+  { value: "Quase 3 anos", label: "como front-end na PlugZ, fintech e marketplace global (08/2023 a 06/2026)" },
+  { value: "2", label: "produtos próprios na Orion Labs: um no ar, outro em beta fechado" },
+];
+
 export type StackGroup = { area: string; items: string[] };
 
 export const stackGroups: StackGroup[] = [
