@@ -1,13 +1,14 @@
 import { ArrowUpRight } from "lucide-react";
 import GithubIcon from "@/components/icons/GithubIcon";
 import { otherProjects } from "@/content/projects";
+import SectionTitle from "@/components/site/SectionTitle";
 
 // Smaller projects, as a compact list of rows: what each one is, its stack and where to open it.
 export default function OtherProjects() {
   return (
     <section id="outros-projetos" className="section">
       <div className="wrap">
-        <h2 className="h2">Outros projetos</h2>
+        <SectionTitle label="Outros projetos" title="Projetos menores, todos com demo e código." />
         <ul className="mt-10 border-t border-line lg:mt-14">
           {otherProjects.map((project) => (
             <li key={project.name} className="row">

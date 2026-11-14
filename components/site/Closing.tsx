@@ -3,6 +3,7 @@ import GithubIcon from "@/components/icons/GithubIcon";
 import LinkedinIcon from "@/components/icons/LinkedinIcon";
 import WhatsappIcon from "@/components/icons/WhatsappIcon";
 import { person } from "@/content/site";
+import SectionTitle from "@/components/site/SectionTitle";
 
 // The contact block and the footer are one closing section.
 export default function Closing() {
@@ -10,7 +11,7 @@ export default function Closing() {
   return (
     <footer id="contato" className="closing section flex flex-col">
       <div className="wrap flex flex-1 flex-col">
-        <h2 className="h2">Contato</h2>
+        <SectionTitle label="Contato" title="Vamos conversar sobre a sua vaga." />
         <a
           className="mt-8 inline-flex min-h-[44px] w-fit items-center break-all text-[clamp(24px,4.6vw,64px)] font-bold leading-tight tracking-tight text-accent underline decoration-1 underline-offset-[0.18em] lg:mt-12"
           href={`mailto:${person.email}`}

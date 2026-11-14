@@ -1,11 +1,12 @@
 import { experienceFacts, jobs, stackGroups } from "@/content/career";
+import SectionTitle from "@/components/site/SectionTitle";
 
 export function Experience() {
   return (
     <section id="experiencia" className="section">
       <div className="wrap grid gap-x-6 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <h2 className="h2">Experiência</h2>
+          <SectionTitle label="Experiência" title="De marketplace global a produto próprio." />
           <dl className="mt-8 grid grid-cols-2 gap-6 lg:sticky lg:top-28 lg:mt-12 lg:grid-cols-1 lg:gap-10">
             {experienceFacts.map((fact) => (
               <div key={fact.value}>
@@ -41,7 +42,7 @@ export function Stack() {
   return (
     <section id="stack" className="section">
       <div className="wrap">
-        <h2 className="h2">Stack por área</h2>
+        <SectionTitle label="Stack por área" title="Do PostgreSQL ao modelo de IA." />
         <ul className="mt-10 border-t border-line lg:mt-14">
           {stackGroups.map((group) => (
             <li key={group.area} className="row">

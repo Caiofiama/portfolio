@@ -2,13 +2,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ProjectVisual from "@/components/site/ProjectVisual";
 import { featuredProjects } from "@/content/projects";
+import SectionTitle from "@/components/site/SectionTitle";
 
 // The four featured projects. Each card is one link to the project's own page.
 export default function FeaturedCards() {
   return (
     <section id="projetos" className="section">
       <div className="wrap">
-        <h2 className="h2">Projetos em destaque</h2>
+        <SectionTitle label="Projetos em destaque" title="Um SaaS no ar, um app em beta e dois códigos abertos." />
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:mt-14">
           {featuredProjects.map((project) => (
             <li key={project.slug} className="flex min-w-0">
