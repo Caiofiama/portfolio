@@ -1,42 +1,55 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Providers from "@/components/Providers";
+import { person, siteUrl } from "@/content/site";
 
-const inter = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
+  weight: ["400"],
   variable: "--font-mono",
   display: "swap",
 });
 
+const description =
+  "Desenvolvedor Full Stack no Rio de Janeiro. Construí o Iconica, SaaS B2B com IA que está no ar, e o ORION AI, assistente para Windows em beta fechado.";
+
 export const metadata: Metadata = {
-  title: "Caio Fiama Jeronimo — Engenheiro Full Stack",
-  description:
-    "Engenheiro Full Stack e Especialista em Desenvolvimento Assistido por IA. Construindo aplicações completas com React, Next.js, PostgreSQL e Stripe.",
-  keywords: ["Engenheiro Full Stack", "React", "TypeScript", "Next.js", "PostgreSQL", "Portfólio"],
-  authors: [{ name: "Caio Fiama Jeronimo" }],
-  openGraph: {
-    title: "Caio Fiama Jeronimo — Engenheiro Full Stack",
-    description: "Construindo aplicações full stack completas — usando IA como ferramenta de alta performance.",
-    type: "website",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${person.name} | ${person.role}`,
+    template: `%s | ${person.name}`,
   },
+  description,
+  authors: [{ name: person.name }],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: person.name,
+    title: `${person.name} | ${person.role}`,
+    description,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
+    <html lang="pt-BR">
+      <body className={`${sans.variable} ${mono.variable} font-sans`}>
+        {children}
       </body>
     </html>
   );
