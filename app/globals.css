@@ -269,6 +269,18 @@
     display: none;
   }
 
+  /* Phones: the office runs edge to edge at the poster's own proportions, instead of the
+     leftover space under the buttons. */
+  @media (max-width: 767px) {
+    .hero__visual {
+      flex: none;
+      width: 100vw;
+      min-height: 0;
+      margin-inline: calc(50% - 50vw);
+      aspect-ratio: 1040 / 800;
+    }
+  }
+
   @media (min-width: 768px) {
     .hero__inner {
       padding-bottom: 40px;
@@ -496,8 +508,15 @@
   /* ---------- Sections ---------- */
 
   .section {
-    padding-top: 96px;
-    padding-bottom: 72px;
+    padding-top: 72px;
+    padding-bottom: 56px;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-top: 96px;
+      padding-bottom: 72px;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -749,12 +768,20 @@ html.lenis body {
   .chip {
     display: inline-flex;
     align-items: center;
-    min-height: 34px;
-    padding: 6px 14px;
+    min-height: 30px;
+    padding: 4px 12px;
     border: 1px solid var(--line-strong);
     border-radius: 999px;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .chip {
+      min-height: 34px;
+      padding: 6px 14px;
+      font-size: 14px;
+    }
   }
 
   /* ---------- Code excerpt (projects with no screen) ---------- */
