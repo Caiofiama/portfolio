@@ -4,6 +4,7 @@ import FeaturedCards from "@/components/site/FeaturedCards";
 import Hero from "@/components/site/Hero";
 import Nav from "@/components/site/Nav";
 import OtherProjects from "@/components/site/OtherProjects";
+import Proofs from "@/components/site/Proofs";
 import ScrollEffects from "@/components/site/ScrollEffects";
 import { person, siteUrl } from "@/content/site";
 
@@ -30,6 +31,7 @@ export default function Home() {
       <Nav />
       <main id="conteudo" tabIndex={-1}>
         <Hero />
+        <Proofs />
         <FeaturedCards />
         <OtherProjects />
         <Experience />

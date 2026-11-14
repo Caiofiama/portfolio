@@ -336,31 +336,98 @@
     }
   }
 
+  /* The four projects at the foot of the hero: the hero's real hook, so they read as cards. */
   .hero-tab {
     display: block;
     min-height: 44px;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
-    transition: border-color 150ms ease;
+    padding: 14px 16px 16px;
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--line-strong);
+    border-radius: 12px;
+    background: rgb(19 19 22 / 0.86);
+    transition:
+      border-color 150ms ease,
+      transform 180ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero-tab:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .hero-tab__status {
+    display: block;
+    color: var(--accent);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1.4;
   }
 
   .hero-tab__name {
     display: block;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.3;
+    margin-top: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
   }
 
   .hero-tab__kind {
     display: block;
     margin-top: 2px;
     color: var(--muted);
-    font-size: 13px;
-    line-height: 1.35;
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   .hero-tab[data-active="true"] {
-    border-top-color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  /* ---------- Proof strip ---------- */
+
+  .proofs {
+    padding-block: 72px;
+    background: var(--surface);
+  }
+
+  .proofs__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+
+  .proofs__value {
+    display: block;
+    font-size: clamp(34px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .proofs__label {
+    display: block;
+    margin-top: 10px;
+    max-width: 16em;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 1024px) {
+    .proofs {
+      padding-block: 96px;
+    }
+
+    .proofs__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .proofs__label {
+      font-size: 16px;
+    }
   }
 
   /* The card the scene pins above the desk in focus. The scene moves .desk-card; the inner box animates. */

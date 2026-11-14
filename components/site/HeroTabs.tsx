@@ -23,6 +23,7 @@ export default function HeroTabs() {
           onFocus={() => heroStore.setActive(project.slug)}
           onBlur={() => heroStore.setActive(null)}
         >
+          <span className="hero-tab__status">{project.status}</span>
           <span className="hero-tab__name">{project.name}</span>
           <span className="hero-tab__kind">{project.kind}</span>
         </Link>
