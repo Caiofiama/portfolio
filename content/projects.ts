@@ -176,7 +176,7 @@ export const featuredProjects: FeaturedProject[] = [
       height: 720,
       alt: "Clipe de 6 segundos: a pessoa diz “ativa o modo foco” e o ORION AI marca cinco passos como feitos, um a um, e confirma.",
     },
-    links: [{ label: "Ver a página do ORION AI", href: "https://orionai.com.br/orion-ai" }],
+    links: [{ label: "Ver a página do ORION AI", href: "https://orion.orionai.com.br/" }],
     problem:
       "Deixar um assistente agir no computador, na agenda, no e-mail e no WhatsApp sem que um texto lido de fora consiga dar ordens a ele, e entender comandos de voz em português com poucos erros.",
     built: [
