@@ -10,7 +10,7 @@ export default function FeaturedCards() {
   return (
     <section id="projetos" className="section">
       <div className="wrap">
-        <SectionTitle label="Projetos em destaque" title="Um SaaS no ar, um app em beta e dois códigos abertos." />
+        <SectionTitle label="Projetos em destaque" title="Dois produtos no ar e dois códigos abertos." />
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:mt-14">
           {featuredProjects.map((project) => (
             <li key={project.slug} className="flex min-w-0" data-reveal>

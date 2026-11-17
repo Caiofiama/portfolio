@@ -153,7 +153,7 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "orion-ai",
     name: "ORION AI",
     kind: "Assistente com IA para Windows",
-    status: "Beta fechado, só Windows",
+    status: "No ar, só Windows",
     summary:
       "Agente com ciclo de ferramentas, memória e aprovação do usuário, com proteção contra prompt injection e 313 testes.",
     fact: "102 de 105 comandos de voz certos",
@@ -176,7 +176,10 @@ export const featuredProjects: FeaturedProject[] = [
       height: 720,
       alt: "Clipe de 6 segundos: a pessoa diz “ativa o modo foco” e o ORION AI marca cinco passos como feitos, um a um, e confirma.",
     },
-    links: [{ label: "Ver a página do ORION AI", href: "https://orion.orionai.com.br/" }],
+    links: [
+      { label: "Ver a página do ORION AI", href: "https://orion.orionai.com.br/" },
+      { label: "Baixar para Windows", href: "https://github.com/caiofikl9-ui/orion-releases/releases/latest" },
+    ],
     problem:
       "Deixar um assistente agir no computador, na agenda, no e-mail e no WhatsApp sem que um texto lido de fora consiga dar ordens a ele, e entender comandos de voz em português com poucos erros.",
     built: [
@@ -184,7 +187,8 @@ export const featuredProjects: FeaturedProject[] = [
       "Agente com ciclo de ferramentas e memória, que controla o PC e pede aprovação antes de agir.",
       "Guarda contra prompt injection: depois de ler conteúdo externo, toda ação com efeito exige aprovação.",
       "Agente de código em sandbox, CSP e IPC validado.",
-      "Instalador com atualização automática.",
+      "Instalador com atualização automática. Ele ainda não tem assinatura digital: na primeira execução, o Windows mostra o aviso do SmartScreen.",
+      "Venda aberta com os planos Pessoal e Pro, com 14 dias grátis no cartão ou pagamento avulso com Pix.",
     ],
     resultsTitle: "Resultado",
     results: [

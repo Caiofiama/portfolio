@@ -13,7 +13,7 @@ export const person = {
   city: "Rio de Janeiro",
   /** From the résumé header. */
   availability: "Disponível para PJ e CLT, remoto ou híbrido.",
-  lead: "Construí o Iconica, um SaaS B2B com IA que já está no ar, e o ORION AI, assistente para Windows em beta fechado. Da interface à API, com testes automatizados.",
+  lead: "Construí o Iconica, um SaaS B2B com IA, e o ORION AI, assistente para Windows. Os dois estão no ar. Da interface à API, com testes automatizados.",
   email: "caiofikl9@gmail.com",
   resume: "/curriculo-caio-fiama.pdf",
   linkedin: "https://www.linkedin.com/in/caiofiamajeronimo",

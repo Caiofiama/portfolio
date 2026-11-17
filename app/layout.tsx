@@ -18,7 +18,7 @@ const mono = JetBrains_Mono({
 });
 
 const description =
-  "Desenvolvedor Full Stack no Rio de Janeiro. Construí o Iconica, SaaS B2B com IA que está no ar, e o ORION AI, assistente para Windows em beta fechado.";
+  "Desenvolvedor Full Stack no Rio de Janeiro. Construí o Iconica, SaaS B2B com IA, e o ORION AI, assistente para Windows. Os dois estão no ar.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
