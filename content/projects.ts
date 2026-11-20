@@ -209,6 +209,48 @@ export const featuredProjects: FeaturedProject[] = [
       "Whisper",
     ],
   },
+  // From the orion-cobra repository (README, docs/plano-mvp.md, docs/telas). Private code, not yet
+  // deployed: no public link. The 199 unit tests were counted with `npm test` on 2026-11-20.
+  {
+    slug: "orion-cobra",
+    name: "Orion Cobra",
+    kind: "Cobrança automática para pequenas empresas",
+    status: "Em desenvolvimento",
+    summary:
+      "Régua de cobrança por e-mail e WhatsApp, com PIX e cartão pelo Mercado Pago e os dados de cada empresa isolados até no banco.",
+    fact: "199 testes unitários",
+    image: {
+      src: "/projetos/orion-cobra-painel.webp",
+      alt: "Painel do Orion Cobra no tema escuro, com dados de demonstração: R$ 10.783,15 em 22 faturas abertas, divididos em uma régua por tempo de atraso.",
+      width: 1280,
+      height: 800,
+    },
+    secondImage: {
+      src: "/projetos/orion-cobra-regua.webp",
+      alt: "Tela da régua do Orion Cobra: lembretes em D-3, D0, D+3, D+7 e D+15, cada passo por e-mail, WhatsApp ou os dois.",
+      width: 1280,
+      height: 720,
+    },
+    links: [],
+    problem:
+      "Pequenas empresas cobram fatura vencida na mão e perdem dinheiro. O sistema precisa lembrar o cliente na hora certa, por e-mail e WhatsApp, dentro das regras do Código de Defesa do Consumidor, receber por PIX ou cartão e nunca misturar os dados de uma empresa com os de outra.",
+    built: [
+      "API em Express 5 e TypeScript, com validação em Zod, e painel em Next.js 15.",
+      "Régua padrão em D-3, D0, D+3, D+7 e D+15, com textos editáveis. As mensagens só saem das 8h às 20h, de segunda a sábado, fora de feriado, e no máximo uma por dia em cada canal.",
+      "Filas com BullMQ e Redis: um worker agenda a régua e outro envia por e-mail e WhatsApp.",
+      "Cobrança pelo Mercado Pago da própria empresa, conectado por OAuth, com PIX, boleto e link. Os tokens ficam cifrados com AES-256-GCM.",
+      "Cada empresa isolada no código e no banco: as relações usam chave composta com o id da empresa.",
+      "Página onde o cliente paga a fatura, com multa e juros dentro do limite legal ou um acordo em parcelas.",
+      "Pronto em modo simulado: painel, página do cliente e assinatura por cartão. Falta o deploy e o primeiro cliente.",
+    ],
+    resultsTitle: "Estado atual",
+    results: [
+      { value: "199", label: "testes unitários passando, mais 27 arquivos de teste de integração com PostgreSQL e Redis" },
+      { value: "25", label: "modelos no banco, em 23 migrations" },
+      { value: "D-3 a D+15", label: "régua padrão com 9 textos cordiais, que a empresa pode editar" },
+    ],
+    stack: ["Express 5", "TypeScript", "Zod", "Next.js 15", "PostgreSQL", "Prisma", "Redis", "BullMQ", "Mercado Pago", "Docker"],
+  },
   {
     slug: "teamtask-api",
     name: "TeamTask API",

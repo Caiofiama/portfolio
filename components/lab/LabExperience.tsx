@@ -967,7 +967,7 @@ export default function LabExperience() {
       {/* The grid where the travelling card lands on its own project. */}
       <section ref={shopRef} id="projetos" className="lab-shop section">
         <div className="wrap">
-          <SectionTitle label="Projetos em destaque" title="Dois produtos no ar e dois códigos abertos." />
+          <SectionTitle label="Projetos em destaque" title="Dois no ar, um em construção e dois códigos abertos." />
           <ul ref={gridRef} className="lab-grid">
             {featuredProjects.map((project) => {
               const t = themeOf(project.slug);

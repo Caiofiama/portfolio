@@ -27,6 +27,7 @@ export const jobs: Job[] = [
     points: [
       "Iconica: API, painel e agentes de IA de um SaaS B2B que está no ar.",
       "ORION AI: assistente para Windows, com assinatura aberta.",
+      "Orion Cobra: cobrança automática por e-mail e WhatsApp, com PIX pelo Mercado Pago; em desenvolvimento.",
       "Integração de LLMs com saída em JSON validada por schema antes de ser aceita.",
       "CI/CD com GitHub Actions e Docker.",
     ],
@@ -36,7 +37,7 @@ export const jobs: Job[] = [
 /** Shown beside the jobs. Both come from the dates and stages above, nothing else. */
 export const experienceFacts = [
   { value: "Quase 3 anos", label: "como front-end na PlugZ, fintech e marketplace global (08/2023 a 06/2026)" },
-  { value: "2", label: "produtos próprios na Orion Labs: os dois no ar, com assinatura aberta" },
+  { value: "3", label: "produtos próprios na Orion Labs: dois no ar, com assinatura aberta, e um em desenvolvimento" },
 ];
 
 export type StackGroup = { area: string; items: string[] };

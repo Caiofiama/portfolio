@@ -54,6 +54,7 @@ export default async function CasePage({ params }: Props) {
               <h1 className="case-title mt-6">{project.name}</h1>
               <p className="mt-4 text-xl leading-[1.4] lg:text-2xl">{project.kind}</p>
               <p className="label mt-4 text-accent">{project.status}</p>
+              {project.links.length > 0 && (
               <ul className="mt-8 flex flex-wrap gap-3">
                 {project.links.map((link, i) => (
                   <li key={link.href}>
@@ -69,6 +70,7 @@ export default async function CasePage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+              )}
             </div>
             <div className="lg:col-span-7">
               {project.clip ? (
