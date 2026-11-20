@@ -1,0 +1,771 @@
+/* Lab, stage 1: the 3D project arc. Everything here is scoped to .lab-* classes.
+   Layering: the WebGL canvas is fixed at z-index 2. The hero creates no stacking context, so the
+   name, title and buttons (z 60) sit above the cards, and the counter (z 1) sits below them. */
+
+.lab-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lab-hero {
+  --u: min(100vw / 1440, 100svh / 900);
+  --frame-r: calc(50% - 720 * var(--u));
+  position: relative;
+  height: 100svh;
+  min-height: 300px;
+  overflow: hidden;
+  background: var(--flav, #3a0d22);
+  color: var(--fg);
+}
+
+.lab-reveal {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.lab-rings {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: calc(2200 * var(--u));
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: repeating-radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.09) 0,
+    rgb(255 255 255 / 0.015) calc(40 * var(--u)),
+    rgb(255 255 255 / 0.09) calc(80 * var(--u))
+  );
+  -webkit-mask-image: radial-gradient(circle, #000 0 22%, rgb(0 0 0 / 0.55) 34%, transparent 52%);
+  mask-image: radial-gradient(circle, #000 0 22%, rgb(0 0 0 / 0.55) 34%, transparent 52%);
+  pointer-events: none;
+  animation: lab-rings-in 1100ms var(--ease-out) both;
+}
+
+@keyframes lab-rings-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+}
+
+.lab-arc {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+body.lab-dragging,
+body.lab-dragging .lab-arc {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* The centred card as a picture, where the 3D card will stand; it fades once the cards are drawn. */
+.lab-poster {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 70 * var(--u));
+  width: auto;
+  height: calc(440 * var(--u));
+  aspect-ratio: 1 / 1.6;
+  /* 4% larger than the 3D card that replaces it, so it stays the page's largest image (LCP)
+     even when the floating card's slight tilt widens its box. */
+  transform: translate(-50%, -50%) scale(1.04);
+  pointer-events: none;
+  transition: opacity 300ms ease 150ms;
+}
+
+.lab-root[data-stage] .lab-poster {
+  opacity: 0;
+}
+
+@media (max-width: 819px) {
+  .lab-poster {
+    top: 42%;
+  }
+}
+
+/* The cards without WebGL (phones, weak devices, reduced motion): CSS 3D, same layer as the canvas. */
+.lab-dom {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  perspective-origin: 50% 50%;
+}
+
+.lab-dom__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.lab-dom__face {
+  position: absolute;
+  inset: 0;
+  border-radius: 6.1% / 3.8%;
+  box-shadow: 0 18px 30px -14px rgb(0 0 0 / 0.45);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* The picture sits on a pseudo-element, so moving cards don't count as the page's main image:
+   that stays the centred card picture already in the HTML. */
+.lab-dom__face::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--face, none) center / 100% 100% no-repeat;
+}
+
+.lab-dom__face--back {
+  transform: rotateY(180deg);
+}
+
+.lab-intro {
+  position: absolute;
+  left: calc(var(--frame-r) + 80 * var(--u));
+  top: calc(112 * var(--u) + 24px);
+  z-index: 60;
+  pointer-events: none;
+}
+
+.lab-intro__name {
+  font-size: max(22px, calc(40 * var(--u)));
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.lab-intro__role {
+  margin-top: 6px;
+  font-size: max(15px, calc(18 * var(--u)));
+  color: rgb(255 255 255 / 0.72);
+}
+
+.lab-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + 250 * var(--u));
+  z-index: 60;
+  display: grid;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Old and new names share one grid cell, so the swap never shifts the layout. */
+.lab-title__layer {
+  grid-area: 1 / 1;
+}
+
+.lab-word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.lab-ch {
+  display: inline-block;
+}
+
+.lab-count {
+  position: absolute;
+  right: calc(var(--frame-r) + 28 * var(--u));
+  top: calc(50% + 215 * var(--u));
+  z-index: 1;
+  font-size: calc(200 * var(--u));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.55);
+  pointer-events: none;
+}
+
+.lab-next {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 195 * var(--u));
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: max(44px, calc(52 * var(--u)));
+  height: max(44px, calc(52 * var(--u)));
+  border-radius: 999px;
+  background: #f5f5f7;
+  color: #000;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.25);
+  transform: translate(-50%, -50%);
+  transition: transform 180ms var(--ease-out);
+}
+
+.lab-next svg {
+  transition: transform 180ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lab-next:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .lab-next:hover svg {
+    transform: translateX(2px);
+  }
+}
+
+.lab-next:active {
+  transform: translate(-50%, -50%) scale(0.94);
+}
+
+.lab-auto {
+  position: absolute;
+  right: calc(var(--frame-r) + 40 * var(--u));
+  top: calc(50% + 170 * var(--u));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lab-auto__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1.3px solid rgb(255 255 255 / 0.85);
+  border-radius: 999px;
+}
+
+.lab-auto__pause {
+  width: 8px;
+  height: 9px;
+  border-inline: 2.5px solid #fff;
+  border-radius: 1px;
+}
+
+.lab-auto__play {
+  display: none;
+  margin-left: 2px;
+  border-left: 8px solid #fff;
+  border-block: 5px solid transparent;
+}
+
+.lab-auto[aria-pressed="false"] .lab-auto__pause {
+  display: none;
+}
+
+.lab-auto[aria-pressed="false"] .lab-auto__play {
+  display: block;
+}
+
+.lab-case {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 330 * var(--u));
+  z-index: 60;
+  transform: translateX(-50%);
+}
+
+.lab-links {
+  position: absolute;
+  left: calc(var(--frame-r) + 80 * var(--u));
+  top: calc(50% + 330 * var(--u));
+  z-index: 60;
+  display: flex;
+  gap: 24px;
+}
+
+/* ---------- "Por dentro": pinned section, front layer and stack burst ---------- */
+
+.lab-inside {
+  position: relative;
+  height: 500vh;
+  background: var(--flav, #3a0d22);
+}
+
+/* Sticky makes its own stacking context, so everything in here paints under the canvas. */
+.lab-pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.lab-dark {
+  position: absolute;
+  inset: 0;
+  background: #07070a;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* A fixed 1440 × 900 design frame (390 × 780 on phones), scaled to the screen from its centre. */
+.lab-frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1440px;
+  height: 900px;
+  transform: translate(-50%, -50%) scale(var(--k, 1));
+}
+
+.lab-in-num {
+  position: absolute;
+  left: 590px;
+  top: 170px;
+  width: 560px;
+  font-size: 400px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1.6px rgb(255 255 255 / 0.32);
+}
+
+.lab-in-card {
+  position: absolute;
+  left: 690px;
+  top: 150px;
+  width: 360px;
+  height: 576px;
+}
+
+.lab-front {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lab-front--off {
+  opacity: 0;
+}
+
+.lab-front--off button,
+.lab-front--off a {
+  pointer-events: none !important;
+}
+
+.lab-in-head {
+  position: absolute;
+  left: 40px;
+  top: 150px;
+  width: 560px;
+  font-size: 76px;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.lab-in-body {
+  position: absolute;
+  left: 40px;
+  top: 330px;
+  width: 500px;
+  font-size: 19px;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.86);
+}
+
+.lab-in-body ul:not(.lab-in-chips) {
+  display: grid;
+  gap: 10px;
+}
+
+.lab-in-body ul:not(.lab-in-chips) li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.lab-in-body ul:not(.lab-in-chips) li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 1.5px;
+  background: rgb(255 255 255 / 0.6);
+}
+
+.lab-in-body dl {
+  display: grid;
+  gap: 22px;
+}
+
+.lab-in-body dt {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.lab-in-body dd {
+  margin-top: 6px;
+}
+
+.lab-in-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lab-in-chips li {
+  padding: 6px 14px;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: 999px;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.lab-in-link {
+  margin-top: 24px;
+  pointer-events: auto;
+}
+
+.lab-in-steps {
+  position: absolute;
+  left: 1290px;
+  top: 300px;
+  display: grid;
+  gap: 10px;
+}
+
+.lab-in-steps button {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid rgb(255 255 255 / 0.7);
+  border-radius: 999px;
+  color: var(--fg);
+  pointer-events: auto;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.lab-in-steps button[aria-current="step"] {
+  background: #f5f5f7;
+  color: #000;
+}
+
+.lab-in-cap {
+  position: absolute;
+  right: 42px;
+  top: 620px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: right;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.lab-storm {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Each piece is laid out at 64px and scaled by the script. */
+.lab-piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.lab-piece--icon {
+  width: 64px;
+  height: 64px;
+  background: #f5f5f7;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.lab-piece--chip {
+  padding: 8px 18px;
+  border: 1.5px solid rgb(255 255 255 / 0.7);
+  border-radius: 999px;
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #f5f5f7;
+}
+
+/* Phone frame: 390 × 780. */
+.lab-root--phone .lab-frame {
+  width: 390px;
+  height: 780px;
+}
+
+.lab-root--phone .lab-in-num {
+  left: 0;
+  top: 150px;
+  width: 390px;
+  font-size: 200px;
+}
+
+.lab-root--phone .lab-in-card {
+  left: 125px;
+  top: 160px;
+  width: 140px;
+  height: 224px;
+}
+
+.lab-root--phone .lab-in-head {
+  left: 16px;
+  top: 76px;
+  width: 358px;
+  font-size: 34px;
+}
+
+.lab-root--phone .lab-in-body {
+  left: 16px;
+  top: 410px;
+  width: 358px;
+  font-size: 14.5px;
+}
+
+.lab-root--phone .lab-in-body li:nth-child(n + 4) {
+  display: none;
+}
+
+.lab-root--phone .lab-in-body dt {
+  font-size: 28px;
+}
+
+.lab-root--phone .lab-in-body dl {
+  gap: 12px;
+}
+
+.lab-root--phone .lab-in-chips li {
+  display: block !important;
+  font-size: 13px;
+  padding: 4px 10px;
+}
+
+.lab-root--phone .lab-in-steps {
+  left: 16px;
+  top: 712px;
+  display: flex;
+  gap: 8px;
+}
+
+.lab-root--phone .lab-in-steps button {
+  width: 44px;
+  height: 44px;
+}
+
+.lab-root--phone .lab-in-cap {
+  display: none;
+}
+
+/* ---------- "Projetos": the grid where the card lands ---------- */
+
+.lab-shop {
+  position: relative;
+  background: var(--bg);
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 48px;
+  perspective: 1200px;
+}
+
+.lab-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 26px 20px 22px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 22px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 88%, #fff), var(--card-bg));
+  text-align: center;
+  transform-style: preserve-3d;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.lab-card__status {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--card-accent);
+}
+
+.lab-card__name {
+  margin-top: 8px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.lab-card__kind {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* The flat picture of the 3D card; on the selected project it stays empty for the real one. */
+.lab-pk {
+  display: block;
+  width: 58%;
+  height: auto;
+  aspect-ratio: 1 / 1.6;
+  margin: 22px auto 20px;
+  filter: drop-shadow(0 12px 18px rgb(0 0 0 / 0.35));
+  transform: translateZ(30px);
+}
+
+.lab-card.live .lab-pk {
+  visibility: hidden;
+}
+
+.lab-card__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lab-card:hover {
+    box-shadow: 0 24px 40px -18px rgb(0 0 0 / 0.7);
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 820px) {
+  .lab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lab-pk {
+    width: 44%;
+  }
+}
+
+/* Phones: a sideways strip that snaps card by card. */
+@media (max-width: 819px) {
+  .lab-grid {
+    display: flex;
+    gap: 12px;
+    margin-inline: -16px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    perspective: none;
+  }
+
+  .lab-grid > li {
+    flex: 0 0 68vw;
+    max-width: 300px;
+    scroll-snap-align: center;
+  }
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 819px) {
+  .lab-hero {
+    --u: min(100vw / 560, 100svh / 980);
+  }
+
+  .lab-intro {
+    left: 16px;
+    top: calc(var(--nav, 64px) + 12px);
+  }
+
+
+  .lab-title {
+    top: auto;
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    padding-inline: 18px;
+  }
+
+  /* Beside the arrow button, clear of the name at the top. */
+  .lab-count {
+    right: 16px;
+    top: auto;
+    bottom: calc(150px + env(safe-area-inset-bottom, 0px));
+    font-size: 52px;
+  }
+
+  .lab-auto {
+    right: 16px;
+    top: calc(var(--nav, 64px) + 70px);
+  }
+
+  .lab-next {
+    top: auto;
+    bottom: calc(176px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 50%);
+  }
+
+  .lab-next:active {
+    transform: translate(-50%, 50%) scale(0.94);
+  }
+
+  .lab-case {
+    top: auto;
+    bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .lab-links {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-rings {
+    animation: none;
+  }
+
+  .lab-next,
+  .lab-next svg,
+  .lab-in-steps button,
+  .lab-card {
+    transition: none;
+  }
+}

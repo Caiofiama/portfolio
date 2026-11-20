@@ -111,7 +111,8 @@ function pointerLight(cleanups: (() => void)[]) {
   cleanups.push(() => document.removeEventListener("pointermove", onMove));
 }
 
-export default function ScrollEffects() {
+/** `driveScroll: false` keeps only the motion below the hero, for a page that runs its own scroll. */
+export default function ScrollEffects({ driveScroll = true }: { driveScroll?: boolean }) {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
@@ -125,8 +126,8 @@ export default function ScrollEffects() {
     });
     cleanups.push(cancelReveal);
 
-    const scene = canRenderScene();
-    const smooth = wantsSmoothScroll();
+    const scene = driveScroll && canRenderScene();
+    const smooth = driveScroll && wantsSmoothScroll();
     const cancel =
       scene || smooth
         ? whenIdle(async () => {
@@ -168,7 +169,7 @@ export default function ScrollEffects() {
       cleanups.forEach((cleanup) => cleanup());
       heroStore.setProgress(0);
     };
-  }, []);
+  }, [driveScroll]);
 
   return null;
 }

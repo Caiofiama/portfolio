@@ -1,11 +1,10 @@
 import { Experience, Stack } from "@/components/site/Career";
 import Closing from "@/components/site/Closing";
-import FeaturedCards from "@/components/site/FeaturedCards";
-import Hero from "@/components/site/Hero";
 import Nav from "@/components/site/Nav";
 import OtherProjects from "@/components/site/OtherProjects";
-import Proofs from "@/components/site/Proofs";
 import ScrollEffects from "@/components/site/ScrollEffects";
+import LabExperience from "@/components/lab/LabExperience";
+import "@/components/lab/lab.css";
 import { person, siteUrl } from "@/content/site";
 
 // Structured data: who this page is about, for search engines.
@@ -30,15 +29,14 @@ export default function Home() {
       />
       <Nav />
       <main id="conteudo" tabIndex={-1}>
-        <Hero />
-        <Proofs />
-        <FeaturedCards />
+        {/* The project cards: hero arc, "Por dentro" and the grid, with their own scroll. */}
+        <LabExperience />
         <OtherProjects />
         <Experience />
         <Stack />
       </main>
       <Closing />
-      <ScrollEffects />
+      <ScrollEffects driveScroll={false} />
     </>
   );
 }

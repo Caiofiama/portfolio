@@ -1,0 +1,3 @@
+Icons in this folder come from simple-icons 16.38.0 (https://simpleicons.org), released under
+CC0-1.0. Each brand name and logo belongs to its owner; they are shown only to name the
+technologies used in the projects on this site.

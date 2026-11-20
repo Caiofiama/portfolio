@@ -9,14 +9,18 @@ export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/** Small screens, weak or data-saving devices and reduced motion keep the poster. */
-export function canRenderScene() {
+/**
+ * Small screens, weak or data-saving devices and reduced motion keep the poster. `probe: false`
+ * skips the test WebGL context, for callers that create their renderer next and fall back if it fails.
+ */
+export function canRenderScene({ probe = true }: { probe?: boolean } = {}) {
   if (prefersReducedMotion()) return false;
   if (!window.matchMedia("(min-width: 768px)").matches) return false;
   const hints = navigator as NavigatorHints;
   if (hints.connection?.saveData) return false;
   if (typeof hints.deviceMemory === "number" && hints.deviceMemory < 4) return false;
   if (typeof hints.hardwareConcurrency === "number" && hints.hardwareConcurrency < 4) return false;
+  if (!probe) return true;
   try {
     return Boolean(document.createElement("canvas").getContext("webgl2"));
   } catch {
